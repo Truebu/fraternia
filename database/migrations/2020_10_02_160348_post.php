@@ -14,7 +14,7 @@ class Post extends Migration
     public function up()
     {
         Schema::create('publicacion', function (Blueprint $table) {
-            $table->id('publicacionId')->autoIncrement();
+            $table->id()->autoIncrement();
             $table->string('publicacionTitulo', 250);
             $table->string('pubpublicacionDescripcion', 250);
             $table->integer('fk_tipoPublicacionId');

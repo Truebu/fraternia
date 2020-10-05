@@ -10,7 +10,6 @@ class PostModel extends Model
     protected $table='publicacion';
 
     protected $fillable = [
-        'publicacionId',
         'publicacionTitulo',
         'pubpublicacionDescripcion',
         'fk_tipoPublicacionId',
