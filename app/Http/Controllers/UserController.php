@@ -26,12 +26,6 @@ class UserController extends Controller
     public function store(CreateUserRequest $request)
     {
         $input= $request->all();
-        if($input['usuarioContraseña'] != $input['confirmarContraseña']){
-            return response()->json([
-                'res' =>false,
-                'message'=>'Confirmar contraseña debe ser igual.'
-            ], 200);
-        }
         $password = $input['usuarioContraseña'];
         $input['usuarioContraseña'] = password_hash($password, PASSWORD_BCRYPT);
         UserModel::create($input);
@@ -72,15 +66,5 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function render($request, Exception $exception)
-    {
-        //Useful since some methods cannot be accessed in certain URL extensions
-        if ($exception instanceof AuthorizationException) {
-            return response()->view('errors.404', [], 404);
-        }
-
-        return parent::render($request, $exception);
     }
 }

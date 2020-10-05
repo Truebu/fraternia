@@ -23,3 +23,5 @@ Route::ApiResources([
     'users'=>UserController::class,
     'publicaciones'=>PostController::class,
 ]);
+
+Route::post('api/users/signup' , [UserController::class,'store']);
