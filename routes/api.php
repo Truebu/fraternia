@@ -22,5 +22,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/', [UserController::class,'index']);
 Route::get('/user', [UserController::class,'show']);
 Route::post('/user/signup',[UserController::class,'signup']);
-Route::put('/user/recovery/{id}',[UserController::class,'update']);
+Route::put('/user/recovery/put',[UserController::class,'update']);
+Route::post('/user/recovery',[UserController::class,'recovery']);
 Route::post('/user/login',[UserController::class,'login']);

@@ -68,6 +68,23 @@ class UserController extends Controller
         return $user;
     }
 
+    public function recovery(UpsdateUserRequest $request, UserModel $user)
+    {
+        $input= $request->all();
+        $usuario = UserModel::where('usuarioEmail','like','%' . $input['usuarioEmail'] . '%')->get();
+        if(count($usuario)==0){
+            return response()->json([
+                'res' =>false,
+                'message'=>'Correo inexistente'
+            ], 200);
+        }
+        $user->update($input);
+        return response()->json([
+            'res' =>true,
+            'message'=>'Resgistro actualizado correctamente.'
+        ], 200);
+    }
+
     //PUT actualizar registros
     public function update(UpsdateUserRequest $request, UserModel $user)
     {
