@@ -23,7 +23,7 @@ class UserController extends Controller
     }
 
     //POST insert
-    public function store(CreateUserRequest $request)
+    public function signup(CreateUserRequest $request)
     {
         $input= $request->all();
         $password = $input['usuarioContraseña'];
@@ -32,6 +32,28 @@ class UserController extends Controller
         return response()->json([
             'res' =>true,
             'message'=>'Resgistro creado correctamente.'
+        ], 200);
+    }
+
+    public function login(Request $request)
+    {
+        $input= $request->all();
+        $usuario = UserModel::where('usuarioEmail','like','%' . $input['usuarioEmail'] . '%')->get();
+        if(count($usuario)==0){
+            return response()->json([
+                'res' =>false,
+                'message'=>'Correo inexistente'
+            ], 200);
+        }
+        if (!password_verify($input['usuarioContraseña'], $usuario[0]['usuarioContraseña'])){
+            return response()->json([
+                'res' =>false,
+                'message'=>'Contraseña incorrecta'
+            ], 200);
+        }
+        return response()->json([
+            'res' =>true,
+            'message'=>'Inicio de sesión correctamente.'
         ], 200);
     }
 

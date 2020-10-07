@@ -40,13 +40,13 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 
     /**
-     * The application's route middleware.
+     * The application's route middleware.            'throttle:api',
+
      *
      * These middleware may be assigned to groups or used individually.
      *
