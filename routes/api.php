@@ -19,9 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/', [UserController::class,'index']);
-Route::get('/user', [UserController::class,'show']);
+Route::get('/user', [UserController::class,'index']);
 Route::post('/user/signup',[UserController::class,'signup']);
-Route::put('/user/recovery/put',[UserController::class,'update']);
+Route::put('/user/recovery/{id}',[UserController::class,'update']);
 Route::post('/user/recovery',[UserController::class,'recovery']);
 Route::post('/user/login',[UserController::class,'login']);
+
+Route::get('/post', [PostController::class,'index']);
+Route::post('/post/topost',[PostController::class,'store']);

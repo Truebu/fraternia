@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PostModel;
+use App\Models\UserModel;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -12,46 +13,28 @@ class PostController extends Controller
         return PostModel::all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $input= $request->all();
+        $hoy = date('Y-m-d');
+        $input['publicacionFechaCreacion']=$hoy;
+        PostModel::create($input);
+        return response()->json([
+            'res' =>true,
+            'message'=>'Publicación creada correctamente.'
+        ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(PostModel $post)
     {
-        //
+        return $post;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

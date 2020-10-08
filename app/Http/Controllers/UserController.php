@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpsdateUserRequest;
 use App\Models\UserModel;
+use Exception;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -57,32 +58,29 @@ class UserController extends Controller
         ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $usuarioId
-     * @return \Illuminate\Http\Response
-     */
     public function show(UserModel $user)
     {
         return $user;
     }
 
-    public function recovery(UpsdateUserRequest $request, UserModel $user)
+    public function recovery(Request $request)
     {
         $input= $request->all();
-        $usuario = UserModel::where('usuarioEmail','like','%' . $input['usuarioEmail'] . '%')->get();
-        if(count($usuario)==0){
+        $user = UserModel::where('usuarioEmail','like','%' . $input['usuarioEmail'] . '%')->get();
+        if(count($user)==0){
             return response()->json([
                 'res' =>false,
                 'message'=>'Correo inexistente'
             ], 200);
         }
-        $user->update($input);
-        return response()->json([
-            'res' =>true,
-            'message'=>'Resgistro actualizado correctamente.'
-        ], 200);
+        try {
+            $this->update($user);
+        }catch (Exception $e){
+            return response()->json([
+                'res' =>false,
+                'message'=>'Resgistro actualizado erroneamente.'
+            ], 200);
+        }
     }
 
     //PUT actualizar registros
@@ -96,12 +94,6 @@ class UserController extends Controller
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
